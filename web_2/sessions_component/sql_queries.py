@@ -1,5 +1,7 @@
 CREATE_USER = 'INSERT INTO "user" (username, password, email, created_at, last_login) VALUES (%s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING user_id'
+DELETE_USER = 'DELETE FROM "user" WHERE username = %s'
 ASSIGN_ROLE = 'INSERT INTO user_has_role (user_id, role_id) VALUES (%s, %s)'
+DELETE_ROLE = 'DELETE FROM user_has_role WHERE user_id = %s'
 CHECK_USER = 'SELECT user_id, temporary, password_expires_at FROM "user" WHERE username = %s AND password = %s'
 UPDATE_LOGIN = 'UPDATE "user" SET last_login = CURRENT_TIMESTAMP WHERE username = %s'
 CHANGE_PASSWORD = 'UPDATE "user" SET password = %s, temporary = FALSE, password_expires_at = NULL WHERE username = %s'

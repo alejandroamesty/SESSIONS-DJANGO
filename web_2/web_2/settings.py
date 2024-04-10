@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'web_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'web_2',
+        'NAME': 'session_test',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
