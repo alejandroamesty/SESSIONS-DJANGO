@@ -1,4 +1,3 @@
-
 import importlib
 import sys
 import os
@@ -63,7 +62,7 @@ def execute_method(object_name, method_name, *params):
     try:
         print(f"Ejecutando método {method_name} en el objeto {object_name}")
 
-        bo_directory = os.path.join(os.path.dirname(file), 'BO')
+        bo_directory = os.path.join(os.path.dirname(__file__), 'BO')
         sys.path.append(bo_directory)
 
         obj_module = importlib.import_module(object_name)
@@ -81,7 +80,7 @@ def execute_method(object_name, method_name, *params):
     except Exception as e:
         print(f"Error al ejecutar el método: {e}")
         raise ValueError(f"Error al ejecutar el método: {e}")
-    
+
 def add_temporary_password(username, new_password, temporary=True, expiration_date=None):
     with connection.cursor() as cursor:
         cursor.execute(UPDATE_TEMPORARY_PASSWORD, [new_password, temporary, expiration_date, username])
