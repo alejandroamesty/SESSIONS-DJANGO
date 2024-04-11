@@ -1,5 +1,9 @@
+
+import importlib
+import sys
+import os
 from django.db import connection
-from .sql_queries import CHECK_USER, UPDATE_LOGIN, CHANGE_PASSWORD, CREATE_USER, ASSIGN_ROLE, DELETE_ROLE, CHECK_ROLE, CHECK_PERMISSION, DELETE_USER
+from .sql_queries import CHECK_USER, UPDATE_LOGIN, CHANGE_PASSWORD, CREATE_USER, ASSIGN_ROLE, DELETE_ROLE, CHECK_ROLE, CHECK_PERMISSION, DELETE_USER, UPDATE_TEMPORARY_PASSWORD, GET_USER_BY_EMAIL
 
 def check_user(username, password):
     with connection.cursor() as cursor:
@@ -54,3 +58,39 @@ def check_user_permissions(username, object_name, method_name):
                 return True
 
         return False
+
+def execute_method(object_name, method_name, *params):
+    try:
+        print(f"Ejecutando método {method_name} en el objeto {object_name}")
+
+        bo_directory = os.path.join(os.path.dirname(file), 'BO')
+        sys.path.append(bo_directory)
+
+        obj_module = importlib.import_module(object_name)
+
+        obj_class = getattr(obj_module, object_name)
+
+        instance = obj_class()
+
+        result = getattr(instance, method_name)(*params)
+        print(f"Resultado de {method_name}: {result}")
+
+        sys.path.remove(bo_directory)
+
+        return result
+    except Exception as e:
+        print(f"Error al ejecutar el método: {e}")
+        raise ValueError(f"Error al ejecutar el método: {e}")
+    
+def add_temporary_password(username, new_password, temporary=True, expiration_date=None):
+    with connection.cursor() as cursor:
+        cursor.execute(UPDATE_TEMPORARY_PASSWORD, [new_password, temporary, expiration_date, username])
+
+def get_username_by_email(email):
+    with connection.cursor() as cursor:
+        cursor.execute(GET_USER_BY_EMAIL, [email])
+        result = cursor.fetchone()
+        if result:
+            return result[0]  # Return username if found
+        else:
+            return None  # Return None if no user found

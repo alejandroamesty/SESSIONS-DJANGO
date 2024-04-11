@@ -4,3 +4,4 @@ from sessions_component.controllers.changepassword import changepassword
 from sessions_component.controllers.signup import signup
 from sessions_component.controllers.checkpermissions import checkpermissions
 from sessions_component.controllers.unregister import unregister
+from sessions_component.controllers.forgotpassword import forgotpassword
