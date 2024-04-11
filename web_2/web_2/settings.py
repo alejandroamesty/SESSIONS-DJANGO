@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'web_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pruebadjango',
+        'NAME': 'web_2',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
